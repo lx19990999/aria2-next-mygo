@@ -116,12 +116,15 @@ go tool mygo build -platform darwin/arm64,darwin/amd64
 
 ## 发布流程
 
-直接打 tag 并推送即可：
+先把含 Release 工作流的提交推到 `main`，再打 **新 tag**（或移动旧 tag）并推送：
 
 ```bash
-git tag v0.2.0
-git push origin v0.2.0
+git push origin main
+git tag v0.0.2
+git push origin v0.0.2
 ```
+
+注意：对失败 run 点 “Re-run” 仍会用 **当时那个 commit** 的工作流；`mapfile` 等修复必须出现在 tag 指向的提交里才会生效。
 
 GitHub Actions（`.github/workflows/release.yml`）会从该 tag 同步版本，构建 Windows exe、Linux deb/rpm、macOS dmg，并发布到 Release。
 

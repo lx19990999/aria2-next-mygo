@@ -134,13 +134,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Avoid `mapfile` (bash 4+); macOS runners ship bash 3.2.
-          files=()
-          while IFS= read -r f; do
-            files+=("$f")
-          done <<EOF
-          $(find dist -type f | sort)
-          EOF
+          # Portable on macOS bash 3.2 (no mapfile). Filenames have no spaces.
+          shopt -s nullglob
+          files=(dist/*)
           test "${#files[@]}" -gt 0
           gh release upload "$GITHUB_REF_NAME" "${files[@]}" \
             --repo "$GITHUB_REPOSITORY" --clobber
@@ -153,6 +149,8 @@ jobs:
 
   publish:
     needs: build
+    # Publish even if one platform failed, so successful uploads are not stuck as draft.
+    if: ${{ always() && !cancelled() && needs.build.result != 'cancelled' }}
     runs-on: ubuntu-latest
     steps:
       - name: Publish release
@@ -160,6 +158,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          if ! gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "release $GITHUB_REF_NAME not found" >&2
+            exit 1
+          fi
+          asset_count="$(gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets|length')"
+          echo "assets=$asset_count"
+          if [ "$asset_count" -eq 0 ]; then
+            echo "no assets uploaded; leave draft unpublished" >&2
+            exit 1
+          fi
           PRERELEASE_ARGS=()
           case "$GITHUB_REF_NAME" in
             *-alpha*|*-beta*|*-rc*) PRERELEASE_ARGS+=(--prerelease) ;;
