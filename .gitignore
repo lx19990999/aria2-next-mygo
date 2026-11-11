@@ -1,0 +1,53 @@
+# Build / package output
+/build/
+/dist/
+/.mygo/
+mygo_windows_*.syso
+*.syso
+
+# Local binaries (build.sh / build.ps1)
+/aria2-next-mygo
+/aria2-next-mygo.exe
+/aria2-next-mygo-*
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go / test
+coverage.out
+coverage.html
+*.coverprofile
+vendor/
+
+# Python helper (options/gen_catalog.py)
+__pycache__/
+*.py[cod]
+.Python
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo
+.idea/
+.vscode/
+*.code-workspace
+
+# Cursor / agent local skills (not part of the app)
+.agents/
+
+# Env / secrets (never commit)
+.env
+.env.*
+!.env.example
+
+# Logs / temp
+*.log
+*.tmp
+*.temp
+.cache/

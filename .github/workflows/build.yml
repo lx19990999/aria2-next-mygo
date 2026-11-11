@@ -1,0 +1,83 @@
+name: build
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            goos: windows
+            goarch: amd64
+            artifact: aria2-next-mygo-windows-amd64.exe
+            ldflags: -H windowsgui
+          - os: ubuntu-latest
+            goos: linux
+            goarch: amd64
+            artifact: aria2-next-mygo-linux-amd64
+            ldflags: ""
+          - os: macos-latest
+            goos: darwin
+            goarch: arm64
+            artifact: aria2-next-mygo-darwin-arm64
+            ldflags: ""
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: aria2-next-mygo
+    steps:
+      - name: Checkout GUI
+        uses: actions/checkout@v4
+        with:
+          path: aria2-next-mygo
+          fetch-depth: 0
+
+      - name: Checkout mygo
+        uses: actions/checkout@v4
+        with:
+          repository: egoist/mygo
+          path: mygo
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: aria2-next-mygo/go.mod
+          cache-dependency-path: |
+            aria2-next-mygo/go.sum
+            mygo/go.sum
+
+      - name: Resolve version from git tag
+        id: ver
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x scripts/git-version.sh scripts/sync-version.sh
+          VER="$(./scripts/sync-version.sh)"
+          echo "version=$VER" >> "$GITHUB_OUTPUT"
+
+      - name: Test
+        run: go test ./...
+
+      - name: Build
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXTRA_X="-X main.appVersion=${{ steps.ver.outputs.version }}"
+          if [ -n "${{ matrix.ldflags }}" ]; then
+            go build -ldflags "${{ matrix.ldflags }} ${EXTRA_X}" -o "${{ matrix.artifact }}" .
+          else
+            go build -ldflags "${EXTRA_X}" -o "${{ matrix.artifact }}" .
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: aria2-next-mygo/${{ matrix.artifact }}

@@ -1,0 +1,161 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  draft-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if ! gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+              --draft --verify-tag --title "$GITHUB_REF_NAME" --generate-notes
+          fi
+
+  build:
+    needs: draft-release
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows
+            os: ubuntu-latest
+            platform: windows/amd64
+            kind: windows
+          - name: Linux
+            os: ubuntu-latest
+            platform: linux/amd64
+            kind: linux
+          - name: macOS
+            os: macos-latest
+            platform: darwin/arm64,darwin/amd64
+            kind: macos
+    defaults:
+      run:
+        working-directory: aria2-next-mygo
+    steps:
+      - name: Checkout GUI
+        uses: actions/checkout@v4
+        with:
+          path: aria2-next-mygo
+          fetch-depth: 0
+
+      - name: Checkout mygo
+        uses: actions/checkout@v4
+        with:
+          repository: egoist/mygo
+          path: mygo
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: aria2-next-mygo/go.mod
+          cache-dependency-path: |
+            aria2-next-mygo/go.sum
+            mygo/go.sum
+
+      - name: Sync version from git tag
+        id: ver
+        env:
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          chmod +x scripts/git-version.sh scripts/sync-version.sh
+          VER="$(./scripts/sync-version.sh)"
+          echo "version=$VER" >> "$GITHUB_OUTPUT"
+          echo "synced mygo.json + will inject main.appVersion=$VER"
+
+      - name: Test
+        run: go test ./...
+
+      - name: Install NSIS (Windows installer helper)
+        if: matrix.name == 'Windows'
+        run: sudo apt-get update && sudo apt-get install -y nsis
+
+      - name: Build packages
+        env:
+          MYGO_LDFLAGS: -X main.appVersion=${{ steps.ver.outputs.version }}
+        run: go tool mygo build -platform "${{ matrix.platform }}"
+
+      - name: Collect release assets
+        shell: bash
+        env:
+          KIND: ${{ matrix.kind }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          shopt -s nullglob
+          case "$KIND" in
+            windows)
+              for f in build/windows-amd64/*.exe; do
+                base="$(basename "$f")"
+                cp -f "$f" "dist/$base"
+                case "$base" in
+                  *-setup-*.exe) ;;
+                  *) cp -f "$f" dist/aria2-next-mygo-windows-amd64.exe ;;
+                esac
+              done
+              ;;
+            linux)
+              for f in build/linux-amd64/*.deb build/linux-amd64/*.rpm; do
+                cp -f "$f" "dist/$(basename "$f")"
+              done
+              ;;
+            macos)
+              for f in build/darwin-arm64/*.dmg build/darwin-amd64/*.dmg build/darwin-universal/*.dmg; do
+                cp -f "$f" "dist/$(basename "$f")"
+              done
+              ;;
+            *)
+              echo "unknown kind: $KIND" >&2
+              exit 1
+              ;;
+          esac
+          ls -la dist
+          test "$(find dist -type f | wc -l)" -gt 0
+
+      - name: Upload to GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(find dist -type f | sort)
+          gh release upload "$GITHUB_REF_NAME" "${files[@]}" \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}-${{ github.ref_name }}
+          path: aria2-next-mygo/dist/*
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          PRERELEASE_ARGS=()
+          case "$GITHUB_REF_NAME" in
+            *-alpha*|*-beta*|*-rc*) PRERELEASE_ARGS+=(--prerelease) ;;
+          esac
+          gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+            --draft=false "${PRERELEASE_ARGS[@]}"

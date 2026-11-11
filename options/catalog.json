@@ -1,0 +1,1134 @@
+[
+  {
+    "section": "Basic",
+    "sectionZh": "基本",
+    "options": [
+      {
+        "key": "dir",
+        "kind": "text",
+        "choices": [],
+        "default": ".",
+        "desc": "Directory to store downloaded files."
+      },
+      {
+        "key": "out",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "File name of the downloaded file, relative to --dir."
+      },
+      {
+        "key": "max-concurrent-downloads",
+        "kind": "text",
+        "choices": [],
+        "default": "5",
+        "desc": "Maximum number of parallel downloads."
+      },
+      {
+        "key": "continue",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Continue a partially downloaded file: one this engine left unfinished from its record, any other from its size."
+      },
+      {
+        "key": "check-integrity",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Verify existing data with piece hashes or --checksum."
+      },
+      {
+        "key": "log",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Write the log to FILE ('-' for stdout)."
+      },
+      {
+        "key": "quiet",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Do not print to the console."
+      }
+    ]
+  },
+  {
+    "section": "HTTP, HTTPS and SFTP",
+    "sectionZh": "HTTP / HTTPS / SFTP",
+    "options": [
+      {
+        "key": "split",
+        "kind": "text",
+        "choices": [],
+        "default": "16",
+        "desc": "Connections used for one download."
+      },
+      {
+        "key": "max-connection-per-server",
+        "kind": "text",
+        "choices": [],
+        "default": "16",
+        "desc": "Connections to one host for one download."
+      },
+      {
+        "key": "min-split-size",
+        "kind": "text",
+        "choices": [],
+        "default": "1M",
+        "desc": "Smallest range that is split for another connection."
+      },
+      {
+        "key": "timeout",
+        "kind": "text",
+        "choices": [],
+        "default": "60",
+        "desc": "Seconds without received data before a connection is retried."
+      },
+      {
+        "key": "connect-timeout",
+        "kind": "text",
+        "choices": [],
+        "default": "60",
+        "desc": "Seconds allowed for connecting."
+      },
+      {
+        "key": "max-tries",
+        "kind": "text",
+        "choices": [],
+        "default": "5",
+        "desc": "Consecutive failures without progress before the task fails (0: unlimited)."
+      },
+      {
+        "key": "retry-wait",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Seconds to wait before retrying (0: automatic back-off)."
+      },
+      {
+        "key": "lowest-speed-limit",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Retry a connection slower than this many bytes/s (0: off)."
+      },
+      {
+        "key": "max-download-limit",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Download speed limit per task in bytes/s (0: unlimited)."
+      },
+      {
+        "key": "max-overall-download-limit",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Total download speed limit in bytes/s (0: unlimited)."
+      },
+      {
+        "key": "user-agent",
+        "kind": "text",
+        "choices": [],
+        "default": "aria2-next",
+        "desc": "User-Agent request header."
+      },
+      {
+        "key": "referer",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Referer request header ('*' uses the download URI)."
+      },
+      {
+        "key": "header",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Additional request header; repeatable."
+      },
+      {
+        "key": "http-user",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "HTTP user name."
+      },
+      {
+        "key": "http-passwd",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "HTTP password."
+      },
+      {
+        "key": "http-no-cache",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Send Cache-Control: no-cache."
+      },
+      {
+        "key": "http-accept-gzip",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Accept and decode gzip/deflate responses."
+      },
+      {
+        "key": "enable-http-keep-alive",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Reuse connections."
+      },
+      {
+        "key": "load-cookies",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Load cookies from a Netscape/Mozilla text or Firefox/Chrome SQLite file."
+      },
+      {
+        "key": "save-cookies",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Save cookies to FILE in Netscape format."
+      },
+      {
+        "key": "check-certificate",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Verify TLS certificates."
+      },
+      {
+        "key": "ca-certificate",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Certificate authorities file (PEM)."
+      },
+      {
+        "key": "certificate",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Client certificate (PEM)."
+      },
+      {
+        "key": "private-key",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Private key for --certificate or SFTP."
+      },
+      {
+        "key": "min-tls-version",
+        "kind": "text",
+        "choices": [],
+        "default": "TLSv1.2` \\",
+        "desc": "`TLSv1.3`"
+      },
+      {
+        "key": "all-proxy",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Proxy for all protocols: [http://][USER:PASS@]HOST[:PORT], socks5://..."
+      },
+      {
+        "key": "all-proxy-user",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "User for --all-proxy."
+      },
+      {
+        "key": "all-proxy-passwd",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Password for --all-proxy."
+      },
+      {
+        "key": "http-proxy",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Proxy for HTTP."
+      },
+      {
+        "key": "http-proxy-user",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "User for --http-proxy."
+      },
+      {
+        "key": "http-proxy-passwd",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Password for --http-proxy."
+      },
+      {
+        "key": "https-proxy",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Proxy for HTTPS."
+      },
+      {
+        "key": "https-proxy-user",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "User for --https-proxy."
+      },
+      {
+        "key": "https-proxy-passwd",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Password for --https-proxy."
+      },
+      {
+        "key": "no-proxy",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Comma-separated hosts, domains, networks or *.globs that bypass the proxy."
+      },
+      {
+        "key": "dns-over-https",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Resolve host names through this DNS-over-HTTPS URL."
+      },
+      {
+        "key": "interface",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Bind connections to an interface, IP address or host name."
+      },
+      {
+        "key": "disable-ipv6",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Do not use IPv6."
+      },
+      {
+        "key": "netrc-path",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "netrc file (default: ~/.netrc)."
+      },
+      {
+        "key": "no-netrc",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Ignore netrc."
+      },
+      {
+        "key": "sftp-user",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "SFTP user name."
+      },
+      {
+        "key": "sftp-passwd",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "SFTP password."
+      },
+      {
+        "key": "ssh-host-key-sha256",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Expected base64 SHA-256 fingerprint of the SFTP host key."
+      },
+      {
+        "key": "remote-time",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Apply the server's Last-Modified time to the file."
+      },
+      {
+        "key": "checksum",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Expected checksum TYPE=DIGEST (sha-1, sha-224, sha-256, sha-384, sha-512, md5)."
+      },
+      {
+        "key": "max-file-not-found",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Fail after this many 404 responses (0: use --max-tries)."
+      },
+      {
+        "key": "filename-hint",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Name suggested by the caller."
+      },
+      {
+        "key": "filename-hint-source",
+        "kind": "text",
+        "choices": [],
+        "default": "title` \\",
+        "desc": "`suggested`"
+      },
+      {
+        "key": "dry-run",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Check availability without downloading."
+      }
+    ]
+  },
+  {
+    "section": "Files",
+    "sectionZh": "文件",
+    "options": [
+      {
+        "key": "allow-overwrite",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Restart from scratch when the output file exists."
+      },
+      {
+        "key": "auto-file-renaming",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Use a numbered name when the output file exists."
+      },
+      {
+        "key": "incomplete-suffix",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Suffix of unfinished HTTP, FTP and SFTP files, removed when they complete (for example .part)."
+      },
+      {
+        "key": "auto-file-renaming-style",
+        "kind": "text",
+        "choices": [],
+        "default": "parentheses",
+        "desc": "`dot`"
+      },
+      {
+        "key": "file-allocation",
+        "kind": "text",
+        "choices": [],
+        "default": "prealloc` \\",
+        "desc": "`falloc` \\"
+      },
+      {
+        "key": "remove-control-file",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Ignore stored progress and start over."
+      },
+      {
+        "key": "force-save",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Save the task in the session even when it is finished."
+      },
+      {
+        "key": "save-not-found",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Save tasks that failed with 404 in the session."
+      },
+      {
+        "key": "index-out",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "INDEX=PATH output path for a torrent file; repeatable."
+      }
+    ]
+  },
+  {
+    "section": "BitTorrent",
+    "sectionZh": "BitTorrent",
+    "options": [
+      {
+        "key": "follow-torrent",
+        "kind": "text",
+        "choices": [],
+        "default": "mem` \\",
+        "desc": "`false`"
+      },
+      {
+        "key": "select-file",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Indexes of files to download, e.g. 1-5,8."
+      },
+      {
+        "key": "pause-metadata",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Pause magnet tasks after metadata until files are selected."
+      },
+      {
+        "key": "listen-port",
+        "kind": "text",
+        "choices": [],
+        "default": "6881",
+        "desc": "Port for TCP and uTP peers."
+      },
+      {
+        "key": "enable-dht",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Use the DHT."
+      },
+      {
+        "key": "enable-peer-exchange",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Use peer exchange."
+      },
+      {
+        "key": "bt-enable-lpd",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Use local peer discovery."
+      },
+      {
+        "key": "bt-port-mapping",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Map listening ports with UPnP and NAT-PMP."
+      },
+      {
+        "key": "bt-encryption",
+        "kind": "text",
+        "choices": [],
+        "default": "required` \\",
+        "desc": "`disabled`"
+      },
+      {
+        "key": "bt-transport",
+        "kind": "text",
+        "choices": [],
+        "default": "utp` \\",
+        "desc": "`both`"
+      },
+      {
+        "key": "bt-tracker",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Additional comma-separated tracker URIs."
+      },
+      {
+        "key": "bt-exclude-tracker",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Comma-separated tracker URIs to remove, or *."
+      },
+      {
+        "key": "bt-max-peers",
+        "kind": "text",
+        "choices": [],
+        "default": "100",
+        "desc": "Peer connections per torrent (0: unlimited)."
+      },
+      {
+        "key": "bt-max-connections",
+        "kind": "text",
+        "choices": [],
+        "default": "500",
+        "desc": "Peer connections in total."
+      },
+      {
+        "key": "bt-max-uploads",
+        "kind": "text",
+        "choices": [],
+        "default": "20",
+        "desc": "Upload slots in total."
+      },
+      {
+        "key": "bt-max-uploads-per-torrent",
+        "kind": "text",
+        "choices": [],
+        "default": "4",
+        "desc": "Upload slots per torrent."
+      },
+      {
+        "key": "max-upload-limit",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Upload speed limit per task in bytes/s (0: unlimited)."
+      },
+      {
+        "key": "max-overall-upload-limit",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Total upload speed limit in bytes/s (0: unlimited)."
+      },
+      {
+        "key": "seed-ratio",
+        "kind": "text",
+        "choices": [],
+        "default": "1.0",
+        "desc": "Stop seeding at this share ratio (0: no ratio limit)."
+      },
+      {
+        "key": "seed-time",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Stop seeding after this many minutes."
+      },
+      {
+        "key": "bt-seed-unverified",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Seed existing files without hash checking."
+      },
+      {
+        "key": "bt-super-seeding",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Use super seeding."
+      },
+      {
+        "key": "bt-first-last-piece-first",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Download the first and last piece of each file first."
+      },
+      {
+        "key": "bt-file-priority",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "INDEX=off\\"
+      },
+      {
+        "key": "force-sequential",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Command line: one task per URI. BitTorrent: download pieces in order."
+      },
+      {
+        "key": "hash-check-only",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Check data and stop."
+      },
+      {
+        "key": "detach-share-only",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Seeding does not count toward --max-concurrent-downloads."
+      },
+      {
+        "key": "bt-external-ip",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "External IP address reported to trackers."
+      },
+      {
+        "key": "bt-external-port",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "External port reported to trackers (0: listening port)."
+      },
+      {
+        "key": "bt-interface",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Comma-separated interfaces or addresses for peers."
+      },
+      {
+        "key": "bt-proxy",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Proxy for peers and trackers: http://, socks4://, socks5://."
+      },
+      {
+        "key": "bt-anonymous-mode",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Hide client identity from peers and trackers."
+      },
+      {
+        "key": "bt-user-agent",
+        "kind": "text",
+        "choices": [],
+        "default": "qBittorrent/5.2.3",
+        "desc": "User agent sent to trackers."
+      },
+      {
+        "key": "bt-peer-id-prefix",
+        "kind": "text",
+        "choices": [],
+        "default": "-qB5230-",
+        "desc": "Peer ID prefix."
+      },
+      {
+        "key": "bt-peer-blocklist",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Blocklist of peer IP ranges (eMule DAT, P2P or CIDR)."
+      },
+      {
+        "key": "bt-blocklist-scope",
+        "kind": "text",
+        "choices": [],
+        "default": "peers-and-trackers` \\",
+        "desc": "`all`"
+      },
+      {
+        "key": "bt-rate-limit-overhead",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Count protocol overhead against speed limits."
+      },
+      {
+        "key": "bt-dht-bootstrap-nodes",
+        "kind": "text",
+        "choices": [],
+        "default": "dht.libtorrent.org:25401,dht.transmissionbt.com:6881,router.bittorrent.com:6881,router.utorrent.com:6881",
+        "desc": "DHT bootstrap nodes."
+      }
+    ]
+  },
+  {
+    "section": "Metalink",
+    "sectionZh": "Metalink",
+    "options": [
+      {
+        "key": "follow-metalink",
+        "kind": "text",
+        "choices": [],
+        "default": "mem` \\",
+        "desc": "`false`"
+      }
+    ]
+  },
+  {
+    "section": "ED2K",
+    "sectionZh": "ED2K",
+    "options": [
+      {
+        "key": "ed2k-server",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Comma-separated HOST:PORT servers."
+      },
+      {
+        "key": "ed2k-server-list",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "server.met file or a list of HOST:PORT lines."
+      },
+      {
+        "key": "ed2k-node-list",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "nodes.dat file to bootstrap Kad."
+      },
+      {
+        "key": "ed2k-listen-port",
+        "kind": "text",
+        "choices": [],
+        "default": "4662",
+        "desc": "TCP port for clients (0: any)."
+      },
+      {
+        "key": "ed2k-udp-listen-port",
+        "kind": "text",
+        "choices": [],
+        "default": "4672",
+        "desc": "UDP port for Kad and clients (0: any)."
+      },
+      {
+        "key": "ed2k-port-mapping",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Forward the ED2K ports with UPnP."
+      },
+      {
+        "key": "ed2k-upload-slots",
+        "kind": "text",
+        "choices": [],
+        "default": "3",
+        "desc": "Upload slots in total."
+      },
+      {
+        "key": "ed2k-max-connections",
+        "kind": "text",
+        "choices": [],
+        "default": "100",
+        "desc": "Client connections in total."
+      },
+      {
+        "key": "ed2k-preview-priority",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Download the first and last parts first."
+      }
+    ]
+  },
+  {
+    "section": "HLS and DASH",
+    "sectionZh": "HLS / DASH",
+    "options": [
+      {
+        "key": "media",
+        "kind": "text",
+        "choices": [],
+        "default": "file` \\",
+        "desc": "`hls` \\"
+      },
+      {
+        "key": "media-format",
+        "kind": "text",
+        "choices": [],
+        "default": "mkv` \\",
+        "desc": "`vtt`"
+      },
+      {
+        "key": "media-video",
+        "kind": "text",
+        "choices": [],
+        "default": "best",
+        "desc": "Video track: best, none, a language or a track ID from media.tracks."
+      },
+      {
+        "key": "media-audio",
+        "kind": "text",
+        "choices": [],
+        "default": "best",
+        "desc": "Audio track: best, none, a language or a track ID from media.tracks."
+      },
+      {
+        "key": "media-subtitles",
+        "kind": "text",
+        "choices": [],
+        "default": "none",
+        "desc": "Subtitle tracks: best, none, a language or a track ID from media.tracks."
+      },
+      {
+        "key": "media-pause-after-probe",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Pause after the presentation is read so tracks can be chosen."
+      },
+      {
+        "key": "media-record-time",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Stop a live recording after this many seconds (0: until the end)."
+      },
+      {
+        "key": "media-start-time",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Start of the downloaded range in seconds (0: the beginning)."
+      },
+      {
+        "key": "media-end-time",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "End of the downloaded range in seconds (0: the end)."
+      },
+      {
+        "key": "media-request-contexts",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "JSON request headers per origin."
+      },
+      {
+        "key": "media-input",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "JSON manifests captured by the browser."
+      }
+    ]
+  },
+  {
+    "section": "RPC",
+    "sectionZh": "RPC",
+    "options": [
+      {
+        "key": "enable-rpc",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Start the JSON-RPC server."
+      },
+      {
+        "key": "rpc-listen-port",
+        "kind": "text",
+        "choices": [],
+        "default": "6800",
+        "desc": "RPC port."
+      },
+      {
+        "key": "rpc-listen-all",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Listen on all interfaces instead of loopback."
+      },
+      {
+        "key": "rpc-allow-origin-all",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Send Access-Control-Allow-Origin: *."
+      },
+      {
+        "key": "rpc-secret",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "RPC token secret."
+      },
+      {
+        "key": "rpc-max-request-size",
+        "kind": "text",
+        "choices": [],
+        "default": "2M",
+        "desc": "Largest accepted request."
+      },
+      {
+        "key": "rpc-save-upload-metadata",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Keep torrents and metalinks added over RPC for the session."
+      },
+      {
+        "key": "pause",
+        "kind": "flag",
+        "choices": [],
+        "default": "false",
+        "desc": "Add the task paused."
+      }
+    ]
+  },
+  {
+    "section": "Advanced",
+    "sectionZh": "高级",
+    "options": [
+      {
+        "key": "state-dir",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Directory for resume data and engine state."
+      },
+      {
+        "key": "save-session",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Write unfinished tasks to FILE on exit."
+      },
+      {
+        "key": "save-session-interval",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Also write the session every SEC seconds (0: only on exit)."
+      },
+      {
+        "key": "state-save-interval",
+        "kind": "text",
+        "choices": [],
+        "default": "10",
+        "desc": "Checkpoint resume data every SEC seconds."
+      },
+      {
+        "key": "max-download-result",
+        "kind": "text",
+        "choices": [],
+        "default": "1000",
+        "desc": "Finished tasks kept in memory."
+      },
+      {
+        "key": "keep-unfinished-download-result",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Keep unfinished results even beyond --max-download-result."
+      },
+      {
+        "key": "stop",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Exit after SEC seconds (0: never)."
+      },
+      {
+        "key": "stop-with-process",
+        "kind": "text",
+        "choices": [],
+        "default": "0",
+        "desc": "Exit when process PID ends."
+      },
+      {
+        "key": "summary-interval",
+        "kind": "text",
+        "choices": [],
+        "default": "60",
+        "desc": "Seconds between progress summaries (0: off)."
+      },
+      {
+        "key": "show-console-readout",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Show the progress line."
+      },
+      {
+        "key": "enable-color",
+        "kind": "flag",
+        "choices": [],
+        "default": "true",
+        "desc": "Use colors on the console."
+      },
+      {
+        "key": "download-result",
+        "kind": "text",
+        "choices": [],
+        "default": "full` \\",
+        "desc": "`hide`"
+      },
+      {
+        "key": "log-level",
+        "kind": "text",
+        "choices": [],
+        "default": "info` \\",
+        "desc": "`notice` \\"
+      },
+      {
+        "key": "console-log-level",
+        "kind": "text",
+        "choices": [],
+        "default": "info` \\",
+        "desc": "`notice` \\"
+      },
+      {
+        "key": "log-max-size",
+        "kind": "text",
+        "choices": [],
+        "default": "10M",
+        "desc": "Rotate the log at this size."
+      },
+      {
+        "key": "log-max-files",
+        "kind": "text",
+        "choices": [],
+        "default": "4",
+        "desc": "Log files kept, including the active one."
+      },
+      {
+        "key": "on-download-start",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Command run when a download starts."
+      },
+      {
+        "key": "on-download-pause",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Command run when a download pauses."
+      },
+      {
+        "key": "on-download-stop",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Command run when a download stops for any reason."
+      },
+      {
+        "key": "on-download-complete",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Command run when a download completes."
+      },
+      {
+        "key": "on-download-error",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Command run when a download fails."
+      },
+      {
+        "key": "on-bt-download-complete",
+        "kind": "text",
+        "choices": [],
+        "default": "",
+        "desc": "Command run when a torrent finishes downloading (before seeding ends)."
+      }
+    ]
+  }
+]
